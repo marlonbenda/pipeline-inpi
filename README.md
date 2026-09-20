@@ -1,30 +1,24 @@
-# Consulta automatizada de marcas do INPI
+# 📊 Radar de Marcas INPI - Paraná
 
-Projeto Python para baixar os dados abertos de marcas do INPI, filtrar titulares do Parana, cruzar as tabelas e gerar bases para pessoas fisicas e juridicas.
+Projeto de extensão acadêmica focado na criação de um pipeline de dados de custo zero para alimentar um dashboard de consulta e monitoramento de marcas do INPI, filtrado para titulares do estado do Paraná.
 
-## Estrutura
+O sistema extrai bases de dados abertas, aplica regras de negócio (alertas de vencimento e farol de status) e orquestra a carga diretamente para a nuvem, garantindo que o painel no Looker Studio seja atualizado sem intervenção humana.
 
-- `src/processar_marcas.py`: script executado localmente e pelo GitHub Actions.
-- `notebooks/`: notebook original para exploracao.
-- `data/raw/`: dados baixados durante a execucao; nao sao versionados.
-- `outputs/`: CSVs gerados; nao sao versionados.
-- `.github/workflows/processar-inpi.yml`: execucao manual ou semanal e upload dos resultados como artefato.
+## 🏗️ Stack Tecnológica
+- **Processamento:** Python (Pandas, Requests)
+- **Armazenamento:** Google BigQuery (Data Warehouse)
+- **Visualização:** Looker Studio
+- **Orquestração:** GitHub Actions (Rotina semanal)
+- **Monitoramento:** Telegram Bot API (Logs de execução)
 
-## Execucao local
+## 📁 Estrutura do Repositório
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-python src/processar_marcas.py
-```
+- `src/processar_marcas.py`: Script principal de ETL executado localmente ou pelo GitHub Actions.
+- `notebooks/`: Ambientes isolados para testes e homologação de regras de negócio.
+- `data/raw/`: Diretório temporário para download das bases brutas (ignorado no versionamento).
+- `outputs/`: Armazena os logs textuais de execução (`pipeline_execucao.txt`).
+- `.github/workflows/processar-inpi.yml`: Arquivo de configuração da automação (CI/CD).
 
-Os resultados ficam em `outputs/`.
-
-## GitHub Actions
-
-Abra a aba **Actions**, escolha **Processar dados do INPI** e use **Run workflow**. O workflow tambem esta agendado para segunda-feira as 06:00 UTC.
-
-O resultado pode ser baixado na secao **Artifacts** da execucao. Este projeto atualmente nao usa BigQuery nem a secret `GCP_CREDENTIALS`; essa secret so sera necessaria quando uma etapa de envio ao BigQuery for implementada.
-
-Nunca versione arquivos JSON de credenciais.
+## ⚙️ Automação (GitHub Actions)
+- O workflow está configurado para ser disparado automaticamente toda segunda-feira às 03:00 UTC.
+- Ele constrói um ambiente limpo (Ubuntu), injeta de forma segura as Secrets do repositório (GCP_CREDENTIALS, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID) e realiza a carga replace no BigQuery, atualizando os dados do Looker Studio instantaneamente. Também é possível forçar a execução manual pela aba Actions > Run workflow.
