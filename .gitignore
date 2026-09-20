@@ -1,0 +1,11 @@
+*.json
+__pycache__/
+*.py[cod]
+.venv/
+.env
+
+# Dados baixados e arquivos gerados localmente
+data/raw/*
+!data/raw/.gitkeep
+outputs/*
+!outputs/.gitkeep
