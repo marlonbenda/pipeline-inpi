@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 .venv/
 .env
+python-dotenv
 
 # Dados baixados e arquivos gerados localmente
 data/raw/*
