@@ -20,5 +20,5 @@ O sistema extrai bases de dados abertas, aplica regras de negócio (alertas de v
 - `.github/workflows/processar-inpi.yml`: Arquivo de configuração da automação (CI/CD).
 
 ## ⚙️ Automação (GitHub Actions)
-- O workflow está configurado para ser disparado automaticamente toda segunda-feira às 03:00 UTC.
+- O workflow está configurado para ser disparado automaticamente toda quarta-feira às 03:00 UTC.
 - Ele constrói um ambiente limpo (Ubuntu), injeta de forma segura as Secrets do repositório (GCP_CREDENTIALS, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID) e realiza a carga replace no BigQuery, atualizando os dados do Looker Studio instantaneamente. Também é possível forçar a execução manual pela aba Actions > Run workflow.
